@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/Adapter/AdapterPattern_Code/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Adapter/AdapterPattern_Code/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ApDungDesignPattern/BaiTapFactory/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ApDungDesignPattern/BaiTapFactory/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ApDungDesignPattern/BaiTapSingleton/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ApDungDesignPattern/BaiTapSingleton/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ApDungDesignPattern/QuanLyTrangThai/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ApDungDesignPattern/QuanLyTrangThai/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ApDungDesignPattern/Restaurant/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ApDungDesignPattern/Restaurant/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Command/CommandPattern_Code/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Command/CommandPattern_Code/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Composite/CompositePattern_Code/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Composite/CompositePattern_Code/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Decorator/DecoratorPattern_Code/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Decorator/DecoratorPattern_Code/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Factory/FactoryPattern_Code/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Factory/FactoryPattern_Code/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Singleton/SingletonPattern_Code/KienTrucPhanMem_DesignPattern/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Singleton/SingletonPattern_Code/KienTrucPhanMem_DesignPattern/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

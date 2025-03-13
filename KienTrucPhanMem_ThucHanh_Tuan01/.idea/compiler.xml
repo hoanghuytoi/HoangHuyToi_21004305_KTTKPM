@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="CompositePattern_Code" />
+        <module name="KienTrucPhanMem_DesignPattern" />
+        <module name="Restaurant" />
+        <module name="BaiTapFactory" />
+        <module name="QuanLyTrangThai" />
+        <module name="FactoryPattern_Code" />
+        <module name="BaiTapSingleton" />
+        <module name="DecoratorPattern_Code" />
+        <module name="AdapterPattern_Code" />
+        <module name="CommandPattern_Code" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>
