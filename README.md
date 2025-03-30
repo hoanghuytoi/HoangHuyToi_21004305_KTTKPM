@@ -21,6 +21,8 @@ Môn học **Kiến trúc và Thiết kế Phần Mềm (KTTKPM)** cung cấp ki
 
 - [Tuần 01](https://github.com/hoanghuytoi/HoangHuyToi_21004305_KTTKPM/tree/main/KienTrucPhanMem_ThucHanh_Tuan01)
 - [Tuần 02](https://github.com/hoanghuytoi/HoangHuyToi_21004305_KTTKPM/tree/main/KienTrucPhanMem_ThucHanh_Tuan02)
+- [Tuần 03](https://github.com/hoanghuytoi/HoangHuyToi_21004305_KTTKPM/tree/main/KienTrucPhanMem_ThucHanh_Tuan03)
+- [Tuần 04](https://github.com/hoanghuytoi/HoangHuyToi_21004305_KTTKPM/tree/main/KienTrucPhanMem_ThucHanh_Tuan04)
 
 ### 📌 Hướng dẫn sử dụng
 1. **Clone repository**:
