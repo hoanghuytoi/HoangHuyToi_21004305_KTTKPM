@@ -1,0 +1,14 @@
+services:
+  service1:
+    image: nginx:latest
+    networks:
+      - private_network
+
+  service2:
+    image: nginx:latest
+    networks:
+      - private_network
+
+networks:
+  private_network:
+    driver: bridge 

@@ -1,0 +1,17 @@
+services:
+  react:
+    build: .
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./build:/usr/share/nginx/html
+    depends_on:
+      - react 
