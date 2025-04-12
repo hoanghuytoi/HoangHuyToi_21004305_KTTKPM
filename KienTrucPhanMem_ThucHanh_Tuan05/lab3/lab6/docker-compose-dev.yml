@@ -1,0 +1,17 @@
+services:
+  app:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+
+  tests:
+    build: .
+    volumes:
+      - .:/app
+    command: python -m pytest
+    depends_on:
+      - app 
