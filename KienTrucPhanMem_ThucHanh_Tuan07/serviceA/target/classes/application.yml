@@ -1,0 +1,42 @@
+server:
+  port: 8080
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      serviceA:
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+  
+  ratelimiter:
+    instances:
+      serviceA:
+        limitForPeriod: 5
+        limitRefreshPeriod: 60s
+        timeoutDuration: 0s
+  
+  timelimiter:
+    instances:
+      serviceA:
+        timeoutDuration: 2s
+        cancelRunningFuture: true
+  
+  retry:
+    instances:
+      serviceA:
+        maxAttempts: 3
+        waitDuration: 1s
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always 

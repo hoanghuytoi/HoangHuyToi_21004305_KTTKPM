@@ -1,0 +1,195 @@
+HƯỚNG DẪN TEST CÁC PATTERN TRONG MICROSERVICE
+
+I. Cấu trúc hệ thống
+Hệ thống gồm 2 service:
+- Service A (port 8080): Triển khai các pattern xử lý lỗi
+- Service B (port 8081): Service đơn giản để test
+
+1. Các Pattern được triển khai
+   1.1. Circuit Breaker: Ngắt mạch khi phát hiện lỗi
+   1.2. Rate Limiter: Giới hạn số lượng request
+   1.3. Time Limiter: Giới hạn thời gian chờ
+   1.4. Retry Pattern: Tự động thử lại khi lỗi
+
+II. Chi tiết các API và cách test
+
+1. Circuit Breaker Pattern
+API Endpoint:
+GET http://localhost:8080/test-cb
+
+Các bước test:
+1.1. Test khi service hoạt động bình thường:
+- Request: GET http://localhost:8080/test-cb
+- Response thành công:
+{
+    "message": "Response from Service B"
+}
+
+1.2. Tắt Service B để test kịch bản lỗi:
+- Request: GET http://localhost:8081/stop
+- Response:
+{
+    "message": "Service B is shutting down..."
+}
+
+1.3. Gọi lại API circuit breaker:
+- Request: GET http://localhost:8080/test-cb
+- Sau khoảng 5 lần lỗi, sẽ nhận response:
+{
+    "message": "Fallback response due to service unavailability"
+}
+
+Cấu hình Circuit Breaker:
+resilience4j:
+  circuitbreaker:
+    instances:
+      serviceA:
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+
+2. Rate Limiter Pattern
+API Endpoint:
+GET http://localhost:8080/test-rate-limit
+
+Các bước test:
+2.1. Gửi 5 request đầu tiên:
+- Request: GET http://localhost:8080/test-rate-limit
+- Response thành công:
+{
+    "message": "Request processed successfully"
+}
+
+2.2. Gửi request thứ 6:
+- Request: GET http://localhost:8080/test-rate-limit
+- Response lỗi:
+{
+    "error": "Internal Server Error",
+    "status": 500
+}
+
+Cấu hình Rate Limiter:
+resilience4j:
+  ratelimiter:
+    instances:
+      serviceA:
+        limitForPeriod: 5
+        limitRefreshPeriod: 60s
+        timeoutDuration: 0s
+
+3. Time Limiter Pattern
+API Endpoint:
+GET http://localhost:8080/test-time-limit
+
+Các bước test:
+3.1. Test response trong thời gian cho phép:
+- Request: GET http://localhost:8080/test-time-limit
+- Response thành công:
+{
+    "message": "Response from Service B"
+}
+
+3.2. Khi response chậm (>2s):
+- Response timeout:
+{
+    "error": "Request timeout",
+    "status": 504
+}
+
+Cấu hình Time Limiter:
+resilience4j:
+  timelimiter:
+    instances:
+      serviceA:
+        timeoutDuration: 2s
+        cancelRunningFuture: true
+
+4. Retry Pattern
+API Endpoint:
+GET http://localhost:8080/test-retry
+
+Các bước test:
+4.1. Test khi service hoạt động bình thường:
+- Request: GET http://localhost:8080/test-retry
+- Response:
+{
+    "message": "Response from Service B"
+}
+
+4.2. Test khi service B không hoạt động:
+- Request: GET http://localhost:8080/test-retry
+- Response sau 3 lần retry:
+{
+    "error": "Service unavailable after 3 retries"
+}
+
+Cấu hình Retry:
+resilience4j:
+  retry:
+    instances:
+      serviceA:
+        maxAttempts: 3
+        waitDuration: 1s
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2
+
+III. Service B Test APIs
+
+1. Test Endpoint
+API Endpoint:
+GET http://localhost:8081/test
+
+Response:
+{
+    "message": "Response from Service B"
+}
+
+2. Stop Service
+API Endpoint:
+GET http://localhost:8081/stop
+
+Response:
+{
+    "message": "Service B is shutting down..."
+}
+
+IV. Lưu ý quan trọng khi test
+
+1. Circuit Breaker:
+- Đợi 10 giây sau khi circuit breaker mở để nó chuyển sang trạng thái half-open
+- Cần 50% request lỗi trong 10 request gần nhất để mở circuit
+
+2. Rate Limiter:
+- Giới hạn 5 request/phút
+- Đợi 60 giây để reset rate limit
+- Test bằng cách gửi nhiều hơn 5 request trong 1 phút
+
+3. Time Limiter:
+- Timeout sau 2 giây
+- Service B được cấu hình delay 1 giây để test
+
+4. Retry Pattern:
+- Thử lại tối đa 3 lần
+- Thời gian giữa các lần thử tăng theo cấp số nhân (1s, 2s, 4s)
+
+5. Khởi động lại Service B:
+- Sau khi test circuit breaker hoặc retry pattern
+- Cần khởi động lại Service B để tiếp tục các test case khác
+
+V. Theo dõi và Debug
+
+1. Logs:
+- Theo dõi logs của cả Service A và B
+- Xem các thông báo về circuit breaker state changes
+- Kiểm tra các lần retry và timeout
+
+2. Metrics:
+- Truy cập /actuator/health để xem trạng thái service
+- Theo dõi metrics của các pattern qua actuator endpoints
+
+3. Troubleshooting:
+- Kiểm tra cổng 8080 và 8081 không bị conflict
+- Đảm bảo cả hai service đều đang chạy khi bắt đầu test
+- Reset toàn bộ hệ thống nếu gặp vấn đề không xác định 
